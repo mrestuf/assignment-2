@@ -37,12 +37,6 @@ func (o *orderRepo) CreateOrder(order *models.Order) error {
 }
 
 func (o *orderRepo) UpdateOrder(id int, order *models.Order) error {
-	if len(order.Items) >= 1 {
-		err := o.db.Debug().Model(&order).Association("Items").Replace(order.Items).Error
-		if err != nil {
-			return err
-		}
-	}
 	err := o.db.Where("id = ?", id).Updates(order).Error
 	return err
 }
